@@ -2,6 +2,7 @@ import sys
 import pygame
 
 from snake import Snake, UP, DOWN, LEFT, RIGHT
+from food import Food
 
 # --- Configuración general ---
 WIDTH, HEIGHT = 600, 400
@@ -27,6 +28,9 @@ def main():
     start_pos = (WIDTH // 2 // CELL_SIZE * CELL_SIZE, HEIGHT // 2 // CELL_SIZE * CELL_SIZE)
     snake = Snake(start_pos, CELL_SIZE)
 
+    food = Food(CELL_SIZE, WIDTH // CELL_SIZE, HEIGHT // CELL_SIZE)
+    food.randomize_position(occupied=snake.body)
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -37,8 +41,12 @@ def main():
 
         snake.move()
 
+        if snake.body[0] == food.position:
+            food.randomize_position(occupied=snake.body)
+
         screen.fill(BG_COLOR)
         snake.draw(screen)
+        food.draw(screen)
         pygame.display.flip()
 
         clock.tick(FPS)
