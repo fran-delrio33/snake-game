@@ -9,7 +9,7 @@ Proyecto de portfolio — Franco del Río, estudiante de Ingeniería en Sistemas
 En desarrollo, por etapas:
 
 - [x] Etapa 1: Ventana del juego y loop principal
-- [ ] Etapa 2: Serpiente (dibujo y movimiento)
+- [x] Etapa 2: Serpiente (dibujo y movimiento)
 - [ ] Etapa 3: Comida (aparición aleatoria y colisión)
 - [ ] Etapa 4: Crecimiento de la serpiente
 - [ ] Etapa 5: Detección de choque (game over)
