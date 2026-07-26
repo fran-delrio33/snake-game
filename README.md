@@ -13,7 +13,7 @@ En desarrollo, por etapas:
 - [x] Etapa 3: Comida (aparición aleatoria y colisión)
 - [x] Etapa 4: Crecimiento de la serpiente
 - [x] Etapa 5: Detección de choque (game over)
-- [ ] Etapa 6: Puntaje en pantalla
+- [x] Etapa 6: Puntaje en pantalla
 - [ ] Etapa 7: Pantalla de inicio y reinicio
 - [ ] Etapa 8: Mejoras opcionales (niveles, sonido, high score)
 

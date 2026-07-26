@@ -10,6 +10,7 @@ CELL_SIZE = 20
 FPS = 10
 
 BG_COLOR = (30, 30, 30)
+SCORE_COLOR = (255, 255, 255)
 
 KEY_TO_DIRECTION = {
     pygame.K_UP: UP,
@@ -24,6 +25,7 @@ def main():
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Snake Game")
     clock = pygame.time.Clock()
+    font = pygame.font.SysFont(None, 28)
 
     start_pos = (WIDTH // 2 // CELL_SIZE * CELL_SIZE, HEIGHT // 2 // CELL_SIZE * CELL_SIZE)
     snake = Snake(start_pos, CELL_SIZE)
@@ -33,6 +35,7 @@ def main():
 
     running = True
     game_over = False
+    score = 0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -45,6 +48,7 @@ def main():
             snake.move(grow=will_eat)
 
             if will_eat:
+                score += 1
                 food.randomize_position(occupied=snake.body)
 
             if snake.hit_wall(WIDTH, HEIGHT) or snake.hit_self():
@@ -53,6 +57,10 @@ def main():
         screen.fill(BG_COLOR)
         snake.draw(screen)
         food.draw(screen)
+
+        score_surface = font.render(f"Puntaje: {score}", True, SCORE_COLOR)
+        screen.blit(score_surface, (10, 10))
+
         pygame.display.flip()
 
         clock.tick(FPS)
