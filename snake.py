@@ -18,12 +18,16 @@ class Snake:
         if new_direction != opposite:
             self.direction = new_direction
 
-    def move(self):
+    def peek_next_head(self):
         head_x, head_y = self.body[0]
         dx, dy = self.direction
-        new_head = (head_x + dx * self.cell_size, head_y + dy * self.cell_size)
+        return (head_x + dx * self.cell_size, head_y + dy * self.cell_size)
+
+    def move(self, grow=False):
+        new_head = self.peek_next_head()
         self.body.insert(0, new_head)
-        self.body.pop()
+        if not grow:
+            self.body.pop()
 
     def draw(self, surface):
         for segment in self.body:

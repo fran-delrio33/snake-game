@@ -39,9 +39,10 @@ def main():
             elif event.type == pygame.KEYDOWN and event.key in KEY_TO_DIRECTION:
                 snake.change_direction(KEY_TO_DIRECTION[event.key])
 
-        snake.move()
+        will_eat = snake.peek_next_head() == food.position
+        snake.move(grow=will_eat)
 
-        if snake.body[0] == food.position:
+        if will_eat:
             food.randomize_position(occupied=snake.body)
 
         screen.fill(BG_COLOR)

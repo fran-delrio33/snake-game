@@ -11,7 +11,7 @@ En desarrollo, por etapas:
 - [x] Etapa 1: Ventana del juego y loop principal
 - [x] Etapa 2: Serpiente (dibujo y movimiento)
 - [x] Etapa 3: Comida (aparición aleatoria y colisión)
-- [ ] Etapa 4: Crecimiento de la serpiente
+- [x] Etapa 4: Crecimiento de la serpiente
 - [ ] Etapa 5: Detección de choque (game over)
 - [ ] Etapa 6: Puntaje en pantalla
 - [ ] Etapa 7: Pantalla de inicio y reinicio
