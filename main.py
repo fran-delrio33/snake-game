@@ -32,6 +32,7 @@ def main():
     food.randomize_position(occupied=snake.body)
 
     running = True
+    game_over = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,11 +40,15 @@ def main():
             elif event.type == pygame.KEYDOWN and event.key in KEY_TO_DIRECTION:
                 snake.change_direction(KEY_TO_DIRECTION[event.key])
 
-        will_eat = snake.peek_next_head() == food.position
-        snake.move(grow=will_eat)
+        if not game_over:
+            will_eat = snake.peek_next_head() == food.position
+            snake.move(grow=will_eat)
 
-        if will_eat:
-            food.randomize_position(occupied=snake.body)
+            if will_eat:
+                food.randomize_position(occupied=snake.body)
+
+            if snake.hit_wall(WIDTH, HEIGHT) or snake.hit_self():
+                game_over = True
 
         screen.fill(BG_COLOR)
         snake.draw(screen)
