@@ -7,7 +7,6 @@ from food import Food
 # --- Configuración general ---
 WIDTH, HEIGHT = 600, 400
 CELL_SIZE = 20
-FPS = 10
 
 BG_COLOR = (30, 30, 30)
 TEXT_COLOR = (255, 255, 255)
@@ -18,6 +17,13 @@ KEY_TO_DIRECTION = {
     pygame.K_LEFT: LEFT,
     pygame.K_RIGHT: RIGHT,
 }
+
+DIFFICULTIES = {
+    pygame.K_1: ("Facil", 8),
+    pygame.K_2: ("Medio", 12),
+    pygame.K_3: ("Dificil", 18),
+}
+DEFAULT_DIFFICULTY = ("Medio", 12)
 
 
 def create_entities():
@@ -47,6 +53,7 @@ def main():
     snake, food = create_entities()
     score = 0
     state = "start"  # "start", "playing" o "game_over"
+    difficulty_name, fps = DEFAULT_DIFFICULTY
 
     running = True
     while running:
@@ -57,6 +64,8 @@ def main():
                 if state == "start":
                     if event.key == pygame.K_SPACE:
                         state = "playing"
+                    elif event.key in DIFFICULTIES:
+                        difficulty_name, fps = DIFFICULTIES[event.key]
                 elif state == "playing":
                     if event.key in KEY_TO_DIRECTION:
                         snake.change_direction(KEY_TO_DIRECTION[event.key])
@@ -82,6 +91,11 @@ def main():
         if state == "start":
             draw_centered_text(screen, title_font, "SNAKE", TEXT_COLOR, HEIGHT // 2 - 30)
             draw_centered_text(screen, font, "Presiona ESPACIO para empezar", TEXT_COLOR, HEIGHT // 2 + 20)
+            draw_centered_text(
+                screen, font,
+                f"Dificultad: {difficulty_name}  (1 Facil / 2 Medio / 3 Dificil)",
+                TEXT_COLOR, HEIGHT // 2 + 50,
+            )
         else:
             snake.draw(screen)
             food.draw(screen)
@@ -95,7 +109,7 @@ def main():
 
         pygame.display.flip()
 
-        clock.tick(FPS)
+        clock.tick(fps)
 
     pygame.quit()
     sys.exit()
