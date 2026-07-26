@@ -14,7 +14,7 @@ En desarrollo, por etapas:
 - [x] Etapa 4: Crecimiento de la serpiente
 - [x] Etapa 5: Detección de choque (game over)
 - [x] Etapa 6: Puntaje en pantalla
-- [ ] Etapa 7: Pantalla de inicio y reinicio
+- [x] Etapa 7: Pantalla de inicio y reinicio
 - [ ] Etapa 8: Mejoras opcionales (niveles, sonido, high score)
 
 ## Requisitos
