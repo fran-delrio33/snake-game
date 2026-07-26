@@ -1,3 +1,4 @@
+import os
 import sys
 import pygame
 
@@ -7,6 +8,8 @@ from food import Food
 # --- Configuración general ---
 WIDTH, HEIGHT = 600, 400
 CELL_SIZE = 20
+
+ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "sounds")
 
 BG_COLOR = (30, 30, 30)
 TEXT_COLOR = (255, 255, 255)
@@ -50,6 +53,9 @@ def main():
     font = pygame.font.SysFont(None, 28)
     title_font = pygame.font.SysFont(None, 48)
 
+    eat_sound = pygame.mixer.Sound(os.path.join(ASSETS_DIR, "eat.wav"))
+    game_over_sound = pygame.mixer.Sound(os.path.join(ASSETS_DIR, "game_over.wav"))
+
     snake, food = create_entities()
     score = 0
     state = "start"  # "start", "playing" o "game_over"
@@ -81,10 +87,12 @@ def main():
 
             if will_eat:
                 score += 1
+                eat_sound.play()
                 food.randomize_position(occupied=snake.body)
 
             if snake.hit_wall(WIDTH, HEIGHT) or snake.hit_self():
                 state = "game_over"
+                game_over_sound.play()
 
         screen.fill(BG_COLOR)
 
