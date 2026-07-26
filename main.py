@@ -10,6 +10,7 @@ WIDTH, HEIGHT = 600, 400
 CELL_SIZE = 20
 
 ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "sounds")
+HIGHSCORE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "highscore.txt")
 
 BG_COLOR = (30, 30, 30)
 TEXT_COLOR = (255, 255, 255)
@@ -27,6 +28,19 @@ DIFFICULTIES = {
     pygame.K_3: ("Dificil", 18),
 }
 DEFAULT_DIFFICULTY = ("Medio", 12)
+
+
+def load_high_score():
+    try:
+        with open(HIGHSCORE_FILE) as f:
+            return int(f.read().strip())
+    except (FileNotFoundError, ValueError):
+        return 0
+
+
+def save_high_score(value):
+    with open(HIGHSCORE_FILE, "w") as f:
+        f.write(str(value))
 
 
 def create_entities():
@@ -58,6 +72,7 @@ def main():
 
     snake, food = create_entities()
     score = 0
+    high_score = load_high_score()
     state = "start"  # "start", "playing" o "game_over"
     difficulty_name, fps = DEFAULT_DIFFICULTY
 
@@ -94,6 +109,10 @@ def main():
                 state = "game_over"
                 game_over_sound.play()
 
+                if score > high_score:
+                    high_score = score
+                    save_high_score(high_score)
+
         screen.fill(BG_COLOR)
 
         if state == "start":
@@ -104,12 +123,17 @@ def main():
                 f"Dificultad: {difficulty_name}  (1 Facil / 2 Medio / 3 Dificil)",
                 TEXT_COLOR, HEIGHT // 2 + 50,
             )
+            draw_centered_text(screen, font, f"Record: {high_score}", TEXT_COLOR, HEIGHT // 2 + 80)
         else:
             snake.draw(screen)
             food.draw(screen)
 
             score_surface = font.render(f"Puntaje: {score}", True, TEXT_COLOR)
             screen.blit(score_surface, (10, 10))
+
+            high_score_surface = font.render(f"Record: {high_score}", True, TEXT_COLOR)
+            high_score_rect = high_score_surface.get_rect(topright=(WIDTH - 10, 10))
+            screen.blit(high_score_surface, high_score_rect)
 
             if state == "game_over":
                 draw_centered_text(screen, title_font, "GAME OVER", TEXT_COLOR, HEIGHT // 2 - 30)
