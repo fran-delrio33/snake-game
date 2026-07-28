@@ -14,6 +14,7 @@ HIGHSCORE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "highs
 
 BG_COLOR = (30, 30, 30)
 TEXT_COLOR = (255, 255, 255)
+GRID_COLOR = (255, 255, 255)
 
 KEY_TO_DIRECTION = {
     pygame.K_UP: UP,
@@ -59,6 +60,18 @@ def draw_centered_text(surface, font, text, color, y):
     surface.blit(rendered, rect)
 
 
+def build_grid_surface():
+    grid = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+    line_color = (*GRID_COLOR, 40)  # blanco con baja opacidad (0-255)
+
+    for x in range(0, WIDTH, CELL_SIZE):
+        pygame.draw.line(grid, line_color, (x, 0), (x, HEIGHT))
+    for y in range(0, HEIGHT, CELL_SIZE):
+        pygame.draw.line(grid, line_color, (0, y), (WIDTH, y))
+
+    return grid
+
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -66,6 +79,7 @@ def main():
     clock = pygame.time.Clock()
     font = pygame.font.SysFont(None, 28)
     title_font = pygame.font.SysFont(None, 48)
+    grid_surface = build_grid_surface()
 
     eat_sound = pygame.mixer.Sound(os.path.join(ASSETS_DIR, "eat.wav"))
     game_over_sound = pygame.mixer.Sound(os.path.join(ASSETS_DIR, "game_over.wav"))
@@ -125,6 +139,7 @@ def main():
             )
             draw_centered_text(screen, font, f"Record: {high_score}", TEXT_COLOR, HEIGHT // 2 + 80)
         else:
+            screen.blit(grid_surface, (0, 0))
             snake.draw(screen)
             food.draw(screen)
 
