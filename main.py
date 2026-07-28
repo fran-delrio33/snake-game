@@ -9,8 +9,26 @@ from food import Food
 WIDTH, HEIGHT = 600, 400
 CELL_SIZE = 20
 
-ASSETS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "sounds")
-HIGHSCORE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "highscore.txt")
+def resource_path(*parts):
+    """Ruta a un archivo empaquetado (assets). Funciona tanto corriendo
+    desde el codigo fuente como desde un ejecutable armado con PyInstaller."""
+    if getattr(sys, "frozen", False):
+        base_dir = sys._MEIPASS
+    else:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_dir, *parts)
+
+
+def app_dir():
+    """Carpeta donde vive el .exe (o el codigo fuente), para guardar datos
+    que tienen que persistir entre ejecuciones (ej: el high score)."""
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+ASSETS_DIR = resource_path("assets", "sounds")
+HIGHSCORE_FILE = os.path.join(app_dir(), "highscore.txt")
 
 BG_COLOR = (30, 30, 30)
 TEXT_COLOR = (255, 255, 255)

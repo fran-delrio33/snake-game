@@ -16,6 +16,8 @@ En desarrollo, por etapas:
 - [x] Etapa 6: Puntaje en pantalla
 - [x] Etapa 7: Pantalla de inicio y reinicio
 - [x] Etapa 8: Mejoras opcionales (niveles, sonido, high score)
+- [x] Etapa 9: Grilla de fondo
+- [x] Etapa 10: Empaquetado como aplicación de escritorio (.exe)
 
 ## Requisitos
 
@@ -37,3 +39,14 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
+
+## Generar el ejecutable (.exe)
+
+El juego se puede empaquetar como una aplicación de escritorio standalone con [PyInstaller](https://pyinstaller.org/), sin necesidad de tener Python instalado para correrlo:
+
+```bash
+pip install -r requirements-dev.txt
+pyinstaller --onefile --windowed --name Snake --add-data "assets;assets" main.py
+```
+
+El ejecutable queda en `dist/Snake.exe`. El high score se guarda en un `highscore.txt` junto al `.exe`.

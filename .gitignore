@@ -5,3 +5,6 @@ __pycache__/
 .idea/
 .claude/
 highscore.txt
+build/
+dist/
+*.spec
